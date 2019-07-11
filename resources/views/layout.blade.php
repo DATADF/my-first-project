@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My First Project</title>
+    <title>@yield('title', 'Learning Laravel 5.8')</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -17,20 +17,7 @@
 
 
     <div class="container">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="about">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact">Contact</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="customers">Customers</a>
-            </li>
-        </ul>
+        @include('includes.nav')
         @yield('content')
     </div>
 
