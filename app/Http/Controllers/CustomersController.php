@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Customer;
+
+use Illuminate\Http\Request;
+
+class CustomersController extends Controller
+{
+     public function List() {
+        $customers = Customer::all();
+
+        return view('internals.customers', [
+            'customers' => $customers,
+        ]);
+     }
+
+     public function store() {
+
+        $customer = new Customer();
+        $customer->name = request('name');
+        $customer->save();
+
+        return back();
+     }
+}
