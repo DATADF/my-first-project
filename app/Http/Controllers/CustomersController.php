@@ -24,22 +24,17 @@ class CustomersController extends Controller
     {
         //Pega todas as Companies e transforma em variável
         $companies = Company::all();
-        return view('customers.create', compact('companies'));
+        $customer = new Customer();
+
+        return view('customers.create', compact('companies', 'customer'));
      }
 
 
      // Salva os dados preenchidos no create e direciona para a lista de Customers
      public function store() {
 
-        $data = request()->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email',
-            'active' => 'required',
-            'company_id' => 'required',
-        ]);
-
         // Cria um novo registro com os campos acima preenchidos
-        Customer::create($data);
+        Customer::create($this->validateRequest());
         //redireciona para a lista
         return redirect('customers');
      }
@@ -61,15 +56,30 @@ class CustomersController extends Controller
     //Atualiza os dados preenchidos
     public function update(Customer $customer)
     {
-        $data = request()->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email',
-        ]);
 
         // Atualiza registro com os campos acima preenchidos
-        $customer->update($data);
+        $customer->update($this->validateRequest());
         //redireciona para o detalhe do Customer
         return redirect('customers/' . $customer->id);
 
+    }
+
+    //Apaga o registro
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+
+        return redirect('customers');
+    }
+
+    // função utilizada em create e update - evitando repetição de código
+    public function validateRequest()
+    {
+        return request()->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'active' => 'required',
+            'company_id' => 'required',
+        ]);
     }
 }

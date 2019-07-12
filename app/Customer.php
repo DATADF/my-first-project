@@ -12,13 +12,16 @@ class Customer extends Model
     // Guarded Exemple = Permite a inclusão de todos os campos no banco de dados
     protected $guarded = [];
 
+    //Estabelece active como default
+    protected $attributes = [
+        'active' => 1
+    ];
+
     //Muda o valor do status para Ativo ou inativo
     public function getActiveAttribute($attribute)
     {
-        return [
-            0 => 'Inactive',
-            1 => 'Active',
-        ][$attribute];
+        // chama a função que estabelece que o valor numérico será impresso como string
+        return $this->activeOptions()[$attribute];
     }
 
     public function scopeActive($query)
@@ -35,6 +38,16 @@ class Customer extends Model
     {
         //belongsTo significa que Customer pertence a (Company) Relação entre tabelas
         return $this->belongsTo(Company::class);
+    }
 
+    // Estabelece que o valor numérico será impresso como string
+    public function activeOptions()
+    {
+        // 0 e 1 são $activeOptionKey / Active e Inactive são $activeOptionValue
+        return [
+            1 => 'Active',
+            0 => 'Inactive',
+            2 => 'In-Progress',
+        ];
     }
 }
