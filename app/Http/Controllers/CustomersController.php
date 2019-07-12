@@ -9,19 +9,25 @@ use Illuminate\Http\Request;
 
 class CustomersController extends Controller
 {
-     public function List() {
-        // Mostra todos os cadastros ativos
-        $activeCustomers = Customer::active()->get();
-        // Mostra todos os cadastros inativos
-        $inactiveCustomers = Customer::inactive()->get();
-
-        $companies = Company::all();
+    //Lista todos os Customers
+     public function index()
+     {
+        //Lista os Customers ativos e inativos
+        $customers = Customer::all();
 
         // Disponibiliza os resultados para que a View receba
-        return view('internals.customers', compact('activeCustomers', 'inactiveCustomers', 'companies'));
+        return view('customers.index', compact('customers'));
+    }
+
+    //chama o formulário de cadastro
+    public function create()
+    {
+        $companies = Company::all();
+        return view('customers.create', compact('companies'));
      }
 
-     // Salva os dados no banco
+
+     // Salva os dados preenchidos no create e direciona para a lista de Customers
      public function store() {
 
         $data = request()->validate([
@@ -33,7 +39,7 @@ class CustomersController extends Controller
 
         // Cria um novo registro com os campos acima preenchidos
         Customer::create($data);
-
-        return back();
+        //redireciona para a lista
+        return redirect('customers');
      }
 }
