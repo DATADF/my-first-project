@@ -22,7 +22,8 @@ class Customer extends Model
     }
 
     public function company(){
-        //belongsTo significa que Customer pertence a (Company)
+        //belongsTo significa que Customer pertence a (Company) Relação entre tabelas
         return $this->belongsTo(Company::class);
+
     }
 }

@@ -11,7 +11,8 @@ class Company extends Model
 
 
     public function customers(){
-        //Has Many significa que uma Company tem muitos (Customers)
+        //Has Many significa que uma Company tem muitos (Customers) - Relação entre tabelas
         return $this->hasMany(Customer::class);
+
     }
 }
