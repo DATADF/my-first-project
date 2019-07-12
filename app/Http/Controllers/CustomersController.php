@@ -22,6 +22,7 @@ class CustomersController extends Controller
     //chama o formulário de cadastro
     public function create()
     {
+        //Pega todas as Companies e transforma em variável
         $companies = Company::all();
         return view('customers.create', compact('companies'));
      }
@@ -48,4 +49,27 @@ class CustomersController extends Controller
      {
         return view('customers.show', compact('customer'));
      }
+
+    // Chama o formulário para edição
+    public function edit(Customer $customer)
+    {
+        $companies = Company::all();
+
+        return view('customers.edit', compact('customer', 'companies'));
+    }
+
+    //Atualiza os dados preenchidos
+    public function update(Customer $customer)
+    {
+        $data = request()->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+        ]);
+
+        // Atualiza registro com os campos acima preenchidos
+        $customer->update($data);
+        //redireciona para o detalhe do Customer
+        return redirect('customers/' . $customer->id);
+
+    }
 }

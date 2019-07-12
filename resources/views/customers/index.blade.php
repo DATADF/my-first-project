@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <h1>Customers List</h1>
-            <p><a href="customers/create">Add New Customer</a></p>
+            <p><a href="customers/create" >Add New Customer</a></p>
         </div>
     </div>
 
