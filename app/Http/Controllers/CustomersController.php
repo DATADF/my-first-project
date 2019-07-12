@@ -42,4 +42,10 @@ class CustomersController extends Controller
         //redireciona para a lista
         return redirect('customers');
      }
+
+     // Exibe o detalhe de cada cadastro
+     public function show(Customer $customer)
+     {
+        return view('customers.show', compact('customer'));
+     }
 }
