@@ -20,4 +20,9 @@ class Customer extends Model
     {
         return $query->where('active', 0);
     }
+
+    public function company(){
+        //belongsTo significa que Customer pertence a (Company)
+        return $this->belongsTo(Company::class);
+    }
 }

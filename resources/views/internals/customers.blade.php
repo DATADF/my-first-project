@@ -35,6 +35,15 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="company_id">Company</label>
+                    <select name="company_id" id="company_id" class="form-control">
+                        @foreach ($companies as $company)
+                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Add Customer</button>
 
                 @csrf
@@ -44,13 +53,13 @@
 
     <hr>
 
-    <div class="row mt-5">
+    <div class="row my-5">
         <div class="col-6">
             <h3>Active Customers</h3>
             <ul>
                 {{-- Loop mostra todos os cadastros ativos --}}
                 @foreach ($activeCustomers as $activeCustomers)
-                    <li>{{ $activeCustomers->name }} <span class="text-muted">({{ $activeCustomers->email }})</span></li>
+                    <li>{{ $activeCustomers->name }} <span class="text-muted">({{ $activeCustomers->company->name }})</span></li>
                 @endforeach
             </ul>
         </div>
@@ -59,9 +68,25 @@
             <ul>
                 {{-- Loop mostra todos os cadastros inativos --}}
                 @foreach ($inactiveCustomers as $inactiveCustomers)
-                    <li>{{ $inactiveCustomers->name }} <span class="text-muted">({{ $inactiveCustomers->email }})</span></li>
+                    <li>{{ $inactiveCustomers->name }} <span class="text-muted">({{ $inactiveCustomers->company->name }})</span></li>
                 @endforeach
             </ul>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row my-5">
+        <div class="col-12">
+            @foreach ($companies as $company)
+                <h5>{{ $company->name }}</h5>
+
+                <ul>
+                    @foreach ($company->customers as $customer)
+                        <li>{{ $customer->name }}</li>
+                    @endforeach
+                </ul>
+            @endforeach
         </div>
     </div>
 
