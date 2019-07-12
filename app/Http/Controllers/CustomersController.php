@@ -9,24 +9,26 @@ use Illuminate\Http\Request;
 class CustomersController extends Controller
 {
      public function List() {
-        $customers = Customer::all();
+        // Mostra todos os cadastros ativos
+        $activeCustomers = Customer::active()->get();
+        // Mostra todos os cadastros inativos
+        $inactiveCustomers = Customer::inactive()->get();
 
-        return view('internals.customers', [
-            'customers' => $customers,
-        ]);
+        // Exibe na view os resultados
+        return view('internals.customers', compact('activeCustomers', 'inactiveCustomers'));
      }
 
+     // Salva os dados no banco
      public function store() {
 
         $data = request()->validate([
             'name' => 'required|min:3',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'active' => 'required'
         ]);
 
-        $customer = new Customer();
-        $customer->name = request('name');
-        $customer->email = request('email');
-        $customer->save();
+        // Cria um novo registro com os campos acima preenchidos
+        Customer::create($data);
 
         return back();
      }

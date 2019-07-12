@@ -16,14 +16,25 @@
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" name="name" placeholder="Name" value="{{ old('name') }}" class="form-control">
+                    <div class="">{{ $errors->first('name') }}</div>
                 </div>
-                <div class="">{{ $errors->first('name') }}</div>
+
 
                 <div class="form-group">
                     <label for="email">E-mail</label>
                     <input type="text" name="email" placeholder="E-mail" value="{{ old('email') }}" class="form-control">
+                    <div class="">{{ $errors->first('email') }}</div>
                 </div>
-                <div class="">{{ $errors->first('email') }}</div>
+
+                <div class="form-group">
+                    <label for="active">Status</label>
+                    <select name="active" id="active" class="form-control">
+                        <option value="" disabled>Select Custumer Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Add Customer</button>
 
                 @csrf
@@ -34,11 +45,21 @@
     <hr>
 
     <div class="row mt-5">
-        <div class="col-12">
-            <h3>Customers</h3>
+        <div class="col-6">
+            <h3>Active Customers</h3>
             <ul>
-                @foreach ($customers as $customer)
-                    <li>{{ $customer->name }} <span class="text-muted">({{ $customer->email }})</span></li>
+                {{-- Loop mostra todos os cadastros ativos --}}
+                @foreach ($activeCustomers as $activeCustomers)
+                    <li>{{ $activeCustomers->name }} <span class="text-muted">({{ $activeCustomers->email }})</span></li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="col-6">
+            <h3>Inactive Customers</h3>
+            <ul>
+                {{-- Loop mostra todos os cadastros inativos --}}
+                @foreach ($inactiveCustomers as $inactiveCustomers)
+                    <li>{{ $inactiveCustomers->name }} <span class="text-muted">({{ $inactiveCustomers->email }})</span></li>
                 @endforeach
             </ul>
         </div>
